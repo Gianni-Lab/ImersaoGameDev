@@ -14,6 +14,8 @@ let bigEnemy;
 
 const enemies = [];
 
+let score;
+
 let gameSpeed = 3;
 const hitboxPrecision = 0.6;
 
@@ -42,6 +44,8 @@ function setup()
 	enemies.push(flyingEnemy);
 	enemies.push(bigEnemy);
 
+	score = new Score();
+
 	frameRate(40);
 }
 
@@ -69,4 +73,6 @@ function draw()
 			console.log('bateu');
 		}
 	});
+
+	score.display();
 }
