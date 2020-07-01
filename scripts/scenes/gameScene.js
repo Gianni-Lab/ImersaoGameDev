@@ -4,6 +4,25 @@ class GameScene
     {
         this.currentEnemy;
         this.currentEnemyIndex = 0;
+
+        this.mapa = [
+            {
+                enemy: 0,
+                speed: 10,
+            },
+            {
+                enemy: 2,
+                speed: 30,
+            },
+            {
+                enemy: 2,
+                speed: 35,
+            },
+            {
+                enemy: 1,
+                speed: 40,
+            },
+        ];
     }
 
     setup()
@@ -19,6 +38,7 @@ class GameScene
         enemies.push(bigEnemy);
 
         score = new Score();
+        healthMeter = new HealthMeter(maximumHealth, initialHealth);
     }
 
     keyPressed(key)
@@ -37,16 +57,56 @@ class GameScene
         character.display();
 
         this.currentEnemy = enemies[this.currentEnemyIndex];
+        // this.currentEnemy = enemies[this.mapa[this.currentEnemyIndex].enemy];
+        // this.currentEnemy.speed = this.mapa[this.currentEnemyIndex].speed;
 
         this.currentEnemy.move();
         this.currentEnemy.display();
 
+        if (this.currentEnemy.isNotVisible)
+        {
+            // this.currentEnemyIndex++;
+            // if (this.currentEnemyIndex >= this.mapa.length)
+            // {
+            //     this.currentEnemyIndex = 0;
+            // }
+            this.currentEnemyIndex = noRepeatRandom(this.currentEnemyIndex, 0, enemies.length);
+            this.currentEnemy.speed = parseInt( random(this.currentEnemy.speedMinimum, this.currentEnemy.speedMaximum) );
+        }
+
         if ( character.testCollision(this.currentEnemy) )
         {
-            image(gameoverImage, width/2 - 206, height/2 -39);
-            noLoop();
+            healthMeter.loseHealth();
+            character.becomeInvincible();
+
+            if (healthMeter.isZero())
+            {
+                this._changeToGameoverScene();
+            }
         }
 
         score.display();
+        healthMeter.display();
+    }
+
+    _changeToGameoverScene()
+    {
+        currentScene = 'gameoverScene';
+    }
+
+    reset()
+    {
+        healthMeter.reset();
+        score.reset();
+
+        scenario.reset();
+        character.reset();
+
+        this.currentEnemyIndex = 0;
+        this.currentEnemy = enemies[this.currentEnemyIndex];
+
+        enemies.forEach(enemy => {
+            enemy.reset();
+        });
     }
 }

@@ -28,4 +28,10 @@ class Scenario
             this.x2 = width;
         }
     }
+
+    reset()
+    {
+        this.x1 = 0;
+        this.x2 = width;
+    }
 }

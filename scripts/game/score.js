@@ -27,4 +27,9 @@ class Score
             scenarioSpeed = (gameSpeed + speedVariation)/2
         }
     }
+
+    reset()
+    {
+        this.score = 0;
+    }
 }

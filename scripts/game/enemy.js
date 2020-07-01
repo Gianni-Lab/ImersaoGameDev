@@ -8,22 +8,29 @@ class Enemy extends Animation
 
         this.speedMinimum = gameSpeed + speedVariation;
         this.speedMaximum = gameSpeed + speedVariation + 20;
+
+        this.isNotVisible = true;
     }
 
     move()
     {
         this.x -= this.speed;
+        this.isNotVisible = false;
 
         if (this.x < -this.width)
         {
             this.x = width;
-            gameScene.currentEnemyIndex = noRepeatRandom(gameScene.currentEnemyIndex, 0, enemies.length);
-            enemies[gameScene.currentEnemyIndex].speed = parseInt( random(this.speedMinimum, this.speedMaximum) );
-
-            console.log(enemies[gameScene.currentEnemyIndex].speed, ' - ', this.speedMinimum, ' - ', this.speedMaximum);
+            this.isNotVisible = true;
         }
 
         this.speedMinimum = gameSpeed + speedVariation;
         this.speedMaximum = gameSpeed + speedVariation + 20;
+    }
+
+    reset()
+    {
+        this.x = width;
+        this.isNotVisible = true;
+        this.speed = gameSpeed;
     }
 }

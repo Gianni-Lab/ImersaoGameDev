@@ -11,15 +11,18 @@ function setup()
 	gameScene = new GameScene();
 	gameScene.setup();
 
+	gameoverScene = new GameoverScene();
+
 	scenes = {
 		openingScene,
 		gameScene,
+		gameoverScene,
 	};
 }
 
 function keyPressed()
 {
-	gameScene.keyPressed(keyCode);
+	scenes[currentScene].keyPressed(keyCode);
 }
 
 function draw()

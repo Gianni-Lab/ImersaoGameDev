@@ -5,6 +5,11 @@ class OpeningScene
 
     }
 
+    keyPressed(key)
+    {
+        
+    }
+
     draw()
     {
         this._showBackgroundImage();

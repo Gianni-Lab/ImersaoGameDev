@@ -10,7 +10,7 @@ class Character extends Animation
         this.jumpSpeed = 0;
         this.gravity = 3;
 
-        this.numJumps = 0
+        this.numJumps = 0;
         this.hitboxPrecision = 0.6;
     }
 
@@ -33,12 +33,26 @@ class Character extends Animation
         {
             this.y = this.initialY;
             this.numJumps = 0;
-            this.jumpSpeed = 50;
+            this.jumpSpeed = 0;
         }
+    }
+
+    becomeInvincible()
+    {
+        this.invincible = true;
+
+        setTimeout(() => {
+            this.invincible = false;
+        }, 1000);
     }
 
     testCollision(enemy)
     {
+        if (this.invincible)
+        {
+            return false;
+        }
+
         const characterX = this.x + (this.width * (1-this.hitboxPrecision) / 2);
         const characterY = this.y + (this.height * (1-this.hitboxPrecision) / 2);
         const characterWidth = this.width * this.hitboxPrecision; 
@@ -49,10 +63,10 @@ class Character extends Animation
         const enemyWidth = enemy.width * this.hitboxPrecision; 
         const enemyHeight = enemy.height * this.hitboxPrecision; 
         
-        noFill();
-        stroke('red');
-        rect(characterX, characterY, characterWidth, characterHeight);
-        rect(enemyX, enemyY, enemyWidth, enemyHeight);
+        // noFill();
+        // stroke('red');
+        // rect(characterX, characterY, characterWidth, characterHeight);
+        // rect(enemyX, enemyY, enemyWidth, enemyHeight);
         
         const response = collideRectRect
         (
@@ -61,5 +75,14 @@ class Character extends Animation
         );
 
         return response;
+    }
+
+    reset()
+    {
+        this.y = this.initialY;
+
+        this.jumpSpeed = 0;
+
+        this.numJumps = 0;
     }
 }
