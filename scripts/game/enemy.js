@@ -5,6 +5,9 @@ class Enemy extends Animation
         super(image, x, y, realWidth, realHeight, spriteWidth, spriteHeight, numSprite, colsSprite);
 
         this.speed = 10;
+
+        this.speedMinimum = gameSpeed + speedVariation;
+        this.speedMaximum = gameSpeed + speedVariation + 20;
     }
 
     move()
@@ -14,6 +17,13 @@ class Enemy extends Animation
         if (this.x < -this.width)
         {
             this.x = width;
+            gameScene.currentEnemyIndex = noRepeatRandom(gameScene.currentEnemyIndex, 0, enemies.length);
+            enemies[gameScene.currentEnemyIndex].speed = parseInt( random(this.speedMinimum, this.speedMaximum) );
+
+            console.log(enemies[gameScene.currentEnemyIndex].speed, ' - ', this.speedMinimum, ' - ', this.speedMaximum);
         }
+
+        this.speedMinimum = gameSpeed + speedVariation;
+        this.speedMaximum = gameSpeed + speedVariation + 20;
     }
 }

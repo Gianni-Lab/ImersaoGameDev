@@ -11,13 +11,14 @@ class Character extends Animation
         this.gravity = 3;
 
         this.numJumps = 0
+        this.hitboxPrecision = 0.6;
     }
 
     jump()
     {
         if (this.numJumps < 2)
         {
-            this.jumpSpeed = -40;
+            this.jumpSpeed = -45;
             this.numJumps++;
             jumpSound.play();
         }
@@ -38,15 +39,15 @@ class Character extends Animation
 
     testCollision(enemy)
     {
-        const characterX = this.x + (this.width * (1-hitboxPrecision) / 2);
-        const characterY = this.y + (this.height * (1-hitboxPrecision) / 2);
-        const characterWidth = this.width * hitboxPrecision; 
-        const characterHeight = this.height * hitboxPrecision; 
+        const characterX = this.x + (this.width * (1-this.hitboxPrecision) / 2);
+        const characterY = this.y + (this.height * (1-this.hitboxPrecision) / 2);
+        const characterWidth = this.width * this.hitboxPrecision; 
+        const characterHeight = this.height * this.hitboxPrecision; 
 
-        const enemyX = enemy.x + (enemy.width * (1-hitboxPrecision) / 2);
-        const enemyY = enemy.y + (enemy.height * (1-hitboxPrecision) / 2);
-        const enemyWidth = enemy.width * hitboxPrecision; 
-        const enemyHeight = enemy.height * hitboxPrecision; 
+        const enemyX = enemy.x + (enemy.width * (1-this.hitboxPrecision) / 2);
+        const enemyY = enemy.y + (enemy.height * (1-this.hitboxPrecision) / 2);
+        const enemyWidth = enemy.width * this.hitboxPrecision; 
+        const enemyHeight = enemy.height * this.hitboxPrecision; 
         
         noFill();
         stroke('red');
